@@ -1,0 +1,17 @@
+{
+  "name": "qualifica",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "João Vitor Oliveira e Bruno Tardin",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^4.0.5"
+  },
+  "dependencies": {
+    "jquery": "^3.3.1"
+  }
+}

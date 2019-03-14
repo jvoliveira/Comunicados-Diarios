@@ -2,10 +2,12 @@ const express = require('express');
 const app = express();
 
 app.get('/', (req, res) => {
-   res.send('Hello from App Engine!');
+   res.setHeader('Access-Control-Allow-Origin', '*');
+   res.send('Você não deveria estar aqui.');
 });
 
 app.get('/resposta', (req, res) => {
+   // res.setHeader('Access-Control-Allow-Origin', '*');
    res.send(CreateJson());
 });
 
@@ -17,11 +19,10 @@ app.listen(PORT, () => {
 
 
 function CreateJson() {
-   var obj = {
-      "dialogo":[
-         {"personagem": '2', "mensagem":"Essa é uma mensagem de teste!"},
-         {"personagem": '3', "mensagem":"Essa é outra mensagem de teste!"}
-      ]
-   }
-   return obj;
+  const fs = require('fs');
+
+  let rawdata = fs.readFileSync('notificacoes/conversa.json');
+  let obj = JSON.parse(rawdata);
+  console.log(obj);
+return obj;
 }
