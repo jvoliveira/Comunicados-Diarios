@@ -2,11 +2,11 @@ var http = require('http');
 
 var conversa;
 var personagemImg = [ "", "img/1.svg", "img/2.svg", "img/3.svg", "img/4.svg", "img/5.svg" ];
-var port = '8080';
-var protocol = 'http';
-var server = '10.117.0.214';
 
 function getMessage(){
+	var port = '8080';
+	var protocol = 'http';
+	var server = '10.117.0.214';
 	var url = protocol + '://' + server + ':' + port + '/resposta';
 
 	var request = http.get(url, function(response){
@@ -90,6 +90,9 @@ enviaConfirmacao(conversa.id);
 }
 
 function enviaConfirmacao(id) {
+	var port = '8080';
+	var protocol = 'http';
+	var server = '10.117.0.214';
 	console.log("entrou");
 	var url = protocol + '://' + server + ':' + port + '/confirmacao?id='+id;
 	var request = http.get(url, function(){

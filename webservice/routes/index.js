@@ -14,7 +14,20 @@ router.get('/', function(req, res, next) {
 */
 router.get('/resposta', (req, res) => {
    res.setHeader('Access-Control-Allow-Origin', '*');
-   res.send(control.getNotificacoesJSON());
+   console.log('ip conectado: '+req.ip.slice(7));
+   res.send(control.getNotificacoesJSON(req.ip));
+});
+
+/*
+  Confirma o recebimento do comunicado.
+*/
+router.get('/confirmacao', (req, res) => {
+   res.setHeader('Access-Control-Allow-Origin', '*');
+
+   console.log('ip confirmado: '+req.ip.slice(7));
+
+   var id = req.query.id;
+   res.send(control.confirmaIP(id, req.ip));
 });
 
 /*
