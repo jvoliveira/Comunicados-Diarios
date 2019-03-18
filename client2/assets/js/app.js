@@ -1,12 +1,40 @@
-var me = {};
-me.avatar = "assets/img/1.svg";
+var http = require('http');
 
-var you = {};
-you.avatar = "assets/img/2.svg";
+var notificacao;
+var personagemImg = [ "", "img/1.svg", "img/2.svg", "img/3.svg", "img/4.svg", "img/5.svg" ];
+var personagemNOME = [ "", "Isonildo", "Norma", "Rebeca Nunes (RN)", "Qualice", "Qualito" ];
 
+function getMessage(){
+	var json_file = 'resposta';
+	var port = '8080';
+	var protocol = 'http';
+	var server = '10.117.0.214';
+	var url = protocol + '://' + server + ':' + port + '/' + json_file;
 
+	var request = http.get(url, function(response){
+		var body = "";
+		response.on("data", function(chunk){
+			body += chunk;
+		});
+		response.on("end", function(){
+			if(response.statusCode === 200){
+				try{
+					console.log(notificacao = JSON.parse(body));
+				} catch (ex){
+					printError("a"+ex);
+				}
+			} else {
+				printError({message: "There was an error getting profile for " + json_file + "."});
+			}
+		});
+	});
 
-//-- No use time. It is a javaScript effect.
+}
+
+function printError(error){
+	console.error(error);
+}
+
 function insertChat(who, text, time, name){
     if (time === undefined){
         time = 0;
@@ -79,15 +107,21 @@ $('body > div > div > div:nth-child(2) > span').click(function(){
 //-- Clear Chat
 resetChat();
 
+
+function iniciaConversa(){
+var tempo = 0;
+  for (var i = 0; i < 2; i++) {
+    if (i%2==0) {
+      insertChat("me", notificacao.dialogo[i].msg, tempo, personagemNOME[notificacao.dialogo[i].personagemId]);
+    } else {
+      insertChat("you", notificacao.dialogo[i].msg, tempo, personagemNOME[notificacao.dialogo[i].personagemId]);
+    }
+    tempo += 2500;
+  }
+  insertChat("final", "", tempo, personagemNOME[notificacao.dialogo[i].personagemId]);
+}
+
 //-- Print Messages
-insertChat("me", "Oi Qualice! Vamos falar sobre qualidade hoje!", 0, 'Qualito');
-insertChat("you", "Claro Qualito! Que tal apresentar nossa aplicação!", 1500, 'Qualice');
-insertChat("me", "Ótimo! Pessoal, essa é um exemplo de como enviar comunicados!", 4000, 'Qualito');
-insertChat("you", "Tenho certeza que os colaboradores vão adorar!",8000, 'Qualice');
-insertChat("me", "Mas será que o grupo da Qualidade gostou?", 12000, 'Qualito');
-insertChat("you", "Vamos perguntar pra eles!", 16000, 'Qualice');
-insertChat("me", "E ai pessoal? Gostaram?", 20000, 'Qualito');
-insertChat("final", "", 21500, 'Qualito');
 
 function fecha(){
 	const remote = require('electron').remote;

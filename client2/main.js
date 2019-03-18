@@ -6,7 +6,7 @@ function createWindow () {
 var screenElectron = electron.screen;
 var mainScreen = screenElectron.getPrimaryDisplay();
 
-console.log(mainScreen);
+// console.log(mainScreen);
 
 
 

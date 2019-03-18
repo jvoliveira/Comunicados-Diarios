@@ -2,13 +2,12 @@ var http = require('http');
 
 var conversa;
 var personagemImg = [ "", "img/1.svg", "img/2.svg", "img/3.svg", "img/3.svg" ];
+var port = '8080';
+var protocol = 'http';
+var server = '10.117.0.214';
 
 function getMessage(){
-	var json_file = 'resposta';
-	var port = '8080';
-	var protocol = 'http';
-	var server = '10.117.0.214';
-	var url = protocol + '://' + server + ':' + port + '/' + json_file;
+	var url = protocol + '://' + server + ':' + port + '/resposta';
 
 	var request = http.get(url, function(response){
 		var body = "";
@@ -19,6 +18,7 @@ function getMessage(){
 			if(response.statusCode === 200){
 				try{
 					conversa = JSON.parse(body);
+					console.log(conversa);
 					firstMessage();
 				} catch (ex){
 					printError("a"+ex);
@@ -32,8 +32,14 @@ function getMessage(){
 }
 
 function firstMessage(){
-		document.getElementById('img-primeiro').src = personagemImg[conversa.dialogo[0].nome];
+		document.getElementById('img-primeiro').src = personagemImg[conversa.dialogo[0].personagemId];
 		document.getElementById('mensagem1').innerHTML = conversa.dialogo[0].msg;
+		document.getElementById('fecha').style.display = 'none';
+		document.getElementById('continua').style.display = 'block';
+
+		const remote = require('electron').remote;
+		var window = remote.getCurrentWindow();
+	   window.show();
 }
 
 function printError(error){
@@ -50,14 +56,14 @@ function clicou(){
 			document.getElementById('primeiro').style.display = 'none';
 			//exibe os segundo e seta os dados
 			document.getElementById('segundo').style.display = 'block';
-			document.getElementById('img-segundo').src = personagemImg[conversa.dialogo[indice].nome];
+			document.getElementById('img-segundo').src = personagemImg[conversa.dialogo[indice].personagemId];
 			document.getElementById('mensagem2').innerHTML = conversa.dialogo[indice].msg;
 		}else{
 			//Esconde o segundo
 			document.getElementById('segundo').style.display = 'none';
 			//exibe o primeiro e seta os dados
 			document.getElementById('primeiro').style.display = 'block';
-			document.getElementById('img-primeiro').src = personagemImg[conversa.dialogo[indice].nome];
+			document.getElementById('img-primeiro').src = personagemImg[conversa.dialogo[indice].personagemId];
 			document.getElementById('mensagem1').innerHTML = conversa.dialogo[indice].msg;
 		}
 		indice++;
@@ -66,7 +72,7 @@ function clicou(){
 		document.getElementById('segundo').style.display = 'none';
 		//exibe o primeiro e seta os dados
 		document.getElementById('primeiro').style.display = 'block';
-		document.getElementById('img-primeiro').src = personagemImg[conversa.dialogo[0].nome];
+		document.getElementById('img-primeiro').src = personagemImg[conversa.dialogo[0].personagemId];
 		document.getElementById('mensagem1').innerHTML = "Esse foi o informativo de hoje!\nFique ligado essa semana para mais novidades!";
 		document.getElementById('continua').style.display = 'none';
 		document.getElementById('fecha').style.display = 'block';
@@ -77,9 +83,23 @@ function clicou(){
 function fecha(){
 	const remote = require('electron').remote;
 	var window = remote.getCurrentWindow();
-   window.close();
+	console.log("fecha()");
+   window.hide();
+//RESPOSTA COM O IP E O // ID
+enviaConfirmacao(conversa.id);
 }
 
+function enviaConfirmacao(id) {
+	console.log("entrou");
+	var url = protocol + '://' + server + ':' + port + '/confirmacao?id='+id;
+	var request = http.get(url, function(){
+		console.log("entrou no enviaConfirmacao");
+	});
+	console.log(request);
+}
+
+
 getMessage();
+setTimeout(getMessage, 1000*60);
 
 module.exports.getMessage = getMessage;
