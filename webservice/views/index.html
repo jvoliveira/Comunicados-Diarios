@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
   <meta charset="utf-8">
-  <title></title>
+  <title>Novo Comunicado</title>
   <link href="stylesheets/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
   <link rel="stylesheet" href="stylesheets/bootstrap-datetimepicker.css" />
   <script src="javascripts/jquery.min.js"></script>
@@ -13,57 +13,77 @@
   <script src="javascripts/create-notification.js"></script>
 </head>
 <body>
-  <h1 align="center">Comunicados</h1>
+  <h1 align="center">Novo Comunicado</h1>
   <br>
   <div class="container">
-    <div class="row well well-sm">
-      <div class="col-md-8">
-        <label>Título</label>
-        <input type="text" placeholder="Título da notificação" class="form-control" id="tituloNotificacao">
+    <div class="row well">
+      <div class="col-md-6">
+				<div class="row">
+					<div class="col-xs-3 col-md-3 text-center">
+						<img src="images/pl.png" alt="bootsnipp" id="imagem" class="img-circle img-responsive" />
+						<br>
+						<select class="form-control" id="personagem">
+							<option value="Isonildo" checked>Isonildo</option>
+							<option value="Norma">Norma</option>
+							<option value="Rebeca Nunes (RN)">Rebeca Nunes (RN)</option>
+							<option value="Qualice">Qualice</option>
+							<option value="Qualito">Qualito</option>
+						</select>
+					</div>
+					<div class="col-xs-9 col-md-9 section-box">
+						<h2 id="nomepersonagem">Personagem</h2>
+						<div class="form-group">
+							<textarea class="form-control rounded-0" id="mensagem" placeholder="Insira a mensagem do personagem aqui..." rows="3"></textarea>
+						</div>
+						<div class="row rating-desc">
+							<div class="col-md-12">
+								<a id="download-json" style="display: none;"></a>
+								<button type="button" id="salvarConversa" class="btn btn-primary">Salvar Conversa</button>
+								<button onclick="adicionaMensagem()" type="button" class="btn btn-success" style="float: right;">Adicionar Mensagem</button>
+							</div>
+						</div>
+					</div>
+				</div>
       </div>
-      <div class='col-md-4'>
-        <div class='input-group date' id='datetimepicker'>
-          <label>Data e Hora da Notificação</label>
-          <input type='text' class="form-control" id="dataNotificacao" required/>
-          <span class="input-group-addon" id="btnData">
-            <span class="glyphicon glyphicon-calendar"></span>
-          </span>
-        </div>
-      </div>
+			<div class="col-md-6">
+				<div class="row">
+					<div class="col-md-12">
+		        <label>Título</label>
+		        <input type="text" placeholder="Título da notificação" class="form-control" id="tituloNotificacao">
+		      </div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<br>
+						<input type="checkbox" id="cbImportante">
+						<label for="cbImportante">Não expira</label>
+					</div>
+				</div>
+					<div class="row well">
+						<div class='col-md-6'>
+			        <div class='input-group date' id='datetimepicker'>
+			          <label>Data de início</label>
+			          <input type='text' class="form-control" id="dataNotificacao" required/>
+			          <span class="input-group-addon" id="btnData">
+			            <span class="glyphicon glyphicon-calendar"></span>
+			          </span>
+			        </div>
+			      </div>
+						<div class='col-md-6'>
+			        <div class='input-group date' id='datetimepicker'>
+			          <label>Data de expiração</label>
+			          <input type='text' class="form-control" id="dataNotificacaoExpiracao"/>
+			          <span class="input-group-addon" id="btnData">
+			            <span class="glyphicon glyphicon-calendar"></span>
+			          </span>
+			        </div>
+			      </div>
+				</div>
+			</div>
+
     </div>
     <div class="row">
-      <div class="col-md-6">
-        <div class="well well-sm">
-          <div class="row">
-            <div class="col-xs-3 col-md-3 text-center">
-              <img src="images/pl.png" alt="bootsnipp" id="imagem" class="img-circle img-responsive" />
-              <br>
-              <select class="form-control" id="personagem">
-                <option value="Isonildo" checked>Isonildo</option>
-                <option value="Norma">Norma</option>
-                <option value="Rebeca Nunes (RN)">Rebeca Nunes (RN)</option>
-                <option value="Qualice">Qualice</option>
-                <option value="Qualito">Qualito</option>
-              </select>
-            </div>
-            <div class="col-xs-9 col-md-9 section-box">
-              <h2 id="nomepersonagem">Personagem</h2>
-              <div class="form-group">
-                <textarea class="form-control rounded-0" id="mensagem" placeholder="Insira a mensagem do personagem aqui..." rows="3"></textarea>
-              </div>
-              <div class="row rating-desc">
-                <div class="col-md-12">
-                  <a id="download-json" style="display: none;"></a>
-                  <button type="button" id="salvarConversa" class="btn btn-primary">Salvar Conversa</button>
-                  <button onclick="adicionaMensagem()" type="button" class="btn btn-success" style="float: right;">Adicionar Mensagem</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 well" id="mensagens">
-
+      <div class="col-md-4" id="mensagens">
       </div>
     </div>
 
