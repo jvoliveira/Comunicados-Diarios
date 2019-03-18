@@ -1,15 +1,14 @@
 var http = require('http');
 
-var notificacao;
+var conversa;
 var personagemImg = [ "", "img/1.svg", "img/2.svg", "img/3.svg", "img/4.svg", "img/5.svg" ];
 var personagemNOME = [ "", "Isonildo", "Norma", "Rebeca Nunes (RN)", "Qualice", "Qualito" ];
+var port = '8080';
+var protocol = 'http';
+var server = '10.117.0.214';
 
 function getMessage(){
-	var json_file = 'resposta';
-	var port = '8080';
-	var protocol = 'http';
-	var server = '10.117.0.214';
-	var url = protocol + '://' + server + ':' + port + '/' + json_file;
+	var url = protocol + '://' + server + ':' + port + '/resposta';
 
 	var request = http.get(url, function(response){
 		var body = "";
@@ -19,7 +18,9 @@ function getMessage(){
 		response.on("end", function(){
 			if(response.statusCode === 200){
 				try{
-					console.log(notificacao = JSON.parse(body));
+					conversa = JSON.parse(body);
+					console.log(conversa);
+					iniciaConversa();
 				} catch (ex){
 					printError("a"+ex);
 				}
@@ -31,8 +32,39 @@ function getMessage(){
 
 }
 
+function iniciaConversa(){
+var tempo = 0;
+  for (var i = 0; i < 2; i++) {
+    if (i%2==0) {
+      insertChat("me", notificacao.dialogo[i].msg, tempo, personagemNOME[notificacao.dialogo[i].personagemId]);
+    } else {
+      insertChat("you", notificacao.dialogo[i].msg, tempo, personagemNOME[notificacao.dialogo[i].personagemId]);
+    }
+    tempo += 2500;
+  }
+  insertChat("final", "", tempo, personagemNOME[notificacao.dialogo[i].personagemId]);
+}
+
 function printError(error){
 	console.error(error);
+}
+
+function fecha(){
+	const remote = require('electron').remote;
+	var window = remote.getCurrentWindow();
+	console.log("fecha()");
+   window.hide();
+//RESPOSTA COM O IP E O // ID
+enviaConfirmacao(conversa.id);
+}
+
+function enviaConfirmacao(id) {
+	console.log("entrou");
+	var url = protocol + '://' + server + ':' + port + '/confirmacao?id='+id;
+	var request = http.get(url, function(){
+		console.log("entrou no enviaConfirmacao");
+	});
+	console.log(request);
 }
 
 function insertChat(who, text, time, name){
@@ -106,27 +138,5 @@ $('body > div > div > div:nth-child(2) > span').click(function(){
 
 //-- Clear Chat
 resetChat();
-
-
-function iniciaConversa(){
-var tempo = 0;
-  for (var i = 0; i < 2; i++) {
-    if (i%2==0) {
-      insertChat("me", notificacao.dialogo[i].msg, tempo, personagemNOME[notificacao.dialogo[i].personagemId]);
-    } else {
-      insertChat("you", notificacao.dialogo[i].msg, tempo, personagemNOME[notificacao.dialogo[i].personagemId]);
-    }
-    tempo += 2500;
-  }
-  insertChat("final", "", tempo, personagemNOME[notificacao.dialogo[i].personagemId]);
-}
-
-//-- Print Messages
-
-function fecha(){
-	const remote = require('electron').remote;
-	var window = remote.getCurrentWindow();
-   window.close();
-}
-
-//-- NOTE: No use time on insertChat.
+getMessage();
+setTimeout(getMessage, 1000*60);
