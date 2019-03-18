@@ -40,6 +40,7 @@ function geraConversaJSON(){
   return json_notificacao = {
     data : getDataNotificacao(),
     titulo : getTituloNotificacao(),
+    recebidos : [],
     dialogo : diag
   }
 }
