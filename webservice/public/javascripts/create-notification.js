@@ -66,7 +66,7 @@ function getMensagem(){
 }
 
 function getPersonagemImg(nomePersonagem){
-  return 'assets/imgs/' + personagens[nomePersonagem] + '.svg'
+  return 'images/' + personagens[nomePersonagem] + '.svg'
 }
 
 function getMensagemHTML(msg, id){
