@@ -7,15 +7,11 @@ function createWindow () {
   win.setMenu(null);
   win.setSkipTaskbar(true);
 
-
   // and load the index.html of the app.
   win.loadFile('index.html');
+  win.hide()
   // win.openDevTools();
 }
 
-function abrir(){
-    setTimeout(createWindow, 1000);
-}
 
-
-app.on('ready', abrir)
+app.on('ready', createWindow)

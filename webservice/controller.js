@@ -27,18 +27,29 @@ function notificacaoValida(notificacao) {
   d = notificacao.data.inicio.split(' ')[0].split('/')
   h = notificacao.data.inicio.split(' ')[1].split(':')
   var dataInicio = createObjData(d,h)
+
+
+  console.log("NOTIFICAÇÃO ID: "+notificacao.id);
   /*
     Se a notificação não for importante, ela vai expirar
   */
   if (!notificacao.importante){
+    console.log("Essa notificacao não é importante!");
     d = notificacao.data.fim.split(' ')[0].split('/')
     h = notificacao.data.fim.split(' ')[1].split(':')
     var dataFim = createObjData(d,h)
+    console.log(dataFim);
     if (hoje > dataInicio && hoje < dataFim){
+      console.log('Essa notificacao está no intervalo de dias');
       return true
     }
   } else {
-    if (hoje > dataInicio) return true;
+    console.log('Essa notificacao é importante!');
+    if (hoje > dataInicio) {
+      console.log('A data já chegou');
+      return true;
+    }
+    console.log('A data ainda não chegou');
     return false;
   }
 }

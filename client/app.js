@@ -101,8 +101,6 @@ function enviaConfirmacao(id) {
 	console.log(request);
 }
 
-
-getMessage();
-setTimeout(getMessage, 1000*60);
+setInterval(getMessage, 1000*60);
 
 module.exports.getMessage = getMessage;
