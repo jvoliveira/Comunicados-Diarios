@@ -9,6 +9,11 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 
+/* GET pagina de historico. */
+router.get('/historico', function(req, res, next) {
+  res.render('historico.html');
+});
+
 /*
   Envia JSON para o solicitante
 */
@@ -17,6 +22,15 @@ router.get('/resposta', (req, res) => {
    console.log('ip conectado: '+req.ip.slice(7));
    res.send(control.getNotificacoesJSON(req.ip));
 });
+
+// Lista todas as Notificações
+router.get('/listaTodas', (req, res) => {
+   res.setHeader('Access-Control-Allow-Origin', '*');
+   console.log('ip conectado listando todas: '+req.ip.slice(7));
+   res.send(control.getNotificacoesJSON());
+});
+
+
 
 /*
   Confirma o recebimento do comunicado.
