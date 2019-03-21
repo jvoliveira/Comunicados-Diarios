@@ -1,5 +1,22 @@
 var json_dialogo = []
 var json_notificacao = {}
+var notificacao = {
+  getDataInicio : function(){
+    return $('#dataNotificacao').val()
+  },
+  getDataFim : function(){
+    return $('#dataNotificacaoExpiracao').val()
+  },
+  getTitulo : function(){
+    return $('#tituloNotificacao').val()
+  },
+  getImportante : function(){
+    return $('#cbImportante').prop('checked')
+  },
+  getId : function(){
+    return '_' + Math.random().toString(36).substr(2, 9)
+  }
+}
 
 const personagens = []
       personagens['Isonildo']          = 1
@@ -13,16 +30,18 @@ $(document).ready(function() {
   $('#personagem').on('change', setValores)
   $('#salvarConversa').on('click', salvaConversaJSON)
   $(function() {
-    $('#datetimepicker').datetimepicker({
+    $('#dataInicio').datetimepicker({
       locale : 'pt-br'
-    });
+    })
+    $('#dataFim').datetimepicker({
+      locale : 'pt-br'
+    })
   });
 })
 
 function salvaConversaJSON(){
   var obj  = geraConversaJSON();
 	var data = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(obj));
-
   /*
   Envia JSON para o servidor
   */
@@ -38,19 +57,16 @@ function geraConversaJSON(){
     if (json_dialogo[i] != null) diag.push(json_dialogo[i])
   }
   return json_notificacao = {
-    data : getDataNotificacao(),
-    titulo : getTituloNotificacao(),
+    id : notificacao.getId(),
+    titulo : notificacao.getTitulo(),
+    importante : notificacao.getImportante(),
+    data : {
+      inicio : notificacao.getDataInicio(),
+      fim : notificacao.getDataFim()
+    },
     recebidos : [],
     dialogo : diag
   }
-}
-
-function getDataNotificacao(){
-  return $('#dataNotificacao').val()
-}
-
-function getTituloNotificacao(){
-  return $('#tituloNotificacao').val()
 }
 
 function setValores(){
