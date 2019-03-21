@@ -126,3 +126,12 @@ function adicionaMensagem(){
 function novaMensagem(){
   $('#mensagem').val('').focus()
 }
+
+
+function bloqueiaData() {
+  if($( "#dataFim" ).hasClass( "bloqueado" )){
+    $( "#dataFim" ).removeClass('bloqueado');
+  }else {
+    $( "#dataFim" ).addClass('bloqueado');
+  }
+}

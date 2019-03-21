@@ -11,6 +11,7 @@
   <script src="javascripts/moment.js" charset="utf-8"></script>
   <script src="javascripts/bootstrap-datetimepicker.min.js"></script>
   <script src="javascripts/create-notification.js"></script>
+  <link rel="stylesheet" href="stylesheets/style.css" />
 </head>
 <body>
   <h1 align="center">Novo Comunicado</h1>
@@ -18,6 +19,41 @@
   <div class="container">
     <div class="row well">
       <div class="col-md-6">
+        <div class="row">
+          <div class="row">
+  					<div class="col-md-12">
+  		        <label>Título</label>
+  		        <input type="text" placeholder="Título da notificação" class="form-control" id="tituloNotificacao">
+  		      </div>
+  				</div>
+  				<div class="row">
+  					<div class="col-md-12">
+  						<br>
+  						<input type="checkbox" id="cbImportante" onclick="bloqueiaData()">
+  						<label for="cbImportante">Não expira</label>
+  					</div>
+  				</div>
+  					<div class="row well">
+  						<div class='col-md-6'>
+  			        <div class='input-group date' id='dataInicio'>
+  			          <label>Data de início</label>
+  			          <input type='text' class="form-control" id="dataNotificacao" required/>
+  			          <span class="input-group-addon" id="btnDataInicio">
+  			            <span class="glyphicon glyphicon-calendar"></span>
+  			          </span>
+  			        </div>
+  			      </div>
+  						<div class='col-md-6'>
+  			        <div class='input-group date' id='dataFim'>
+  			          <label>Data de expiração</label>
+  			          <input type='text' class="form-control" id="dataNotificacaoExpiracao"/>
+  			          <span class="input-group-addon" id="btnDataFim">
+  			            <span class="glyphicon glyphicon-calendar"></span>
+  			          </span>
+  			        </div>
+  			      </div>
+  				</div>
+        </div>
 				<div class="row">
 					<div class="col-xs-3 col-md-3 text-center">
 						<img src="images/pl.png" alt="bootsnipp" id="imagem" class="img-circle img-responsive" />
@@ -46,46 +82,13 @@
 				</div>
       </div>
 			<div class="col-md-6">
-				<div class="row">
-					<div class="col-md-12">
-		        <label>Título</label>
-		        <input type="text" placeholder="Título da notificação" class="form-control" id="tituloNotificacao">
-		      </div>
-				</div>
-				<div class="row">
-					<div class="col-md-12">
-						<br>
-						<input type="checkbox" id="cbImportante">
-						<label for="cbImportante">Não expira</label>
-					</div>
-				</div>
-					<div class="row well">
-						<div class='col-md-6'>
-			        <div class='input-group date' id='datetimepicker'>
-			          <label>Data de início</label>
-			          <input type='text' class="form-control" id="dataNotificacao" required/>
-			          <span class="input-group-addon" id="btnData">
-			            <span class="glyphicon glyphicon-calendar"></span>
-			          </span>
-			        </div>
-			      </div>
-						<div class='col-md-6'>
-			        <div class='input-group date' id='datetimepicker'>
-			          <label>Data de expiração</label>
-			          <input type='text' class="form-control" id="dataNotificacaoExpiracao"/>
-			          <span class="input-group-addon" id="btnData">
-			            <span class="glyphicon glyphicon-calendar"></span>
-			          </span>
-			        </div>
-			      </div>
-				</div>
-			</div>
-
-    </div>
-    <div class="row">
-      <div class="col-md-4" id="mensagens">
+        <div class="col-md-12" id="mensagens">
+        </div>
       </div>
     </div>
+
+
+
 
   </div>
   <form id="form-notificacao" action="salvar" method="post">
