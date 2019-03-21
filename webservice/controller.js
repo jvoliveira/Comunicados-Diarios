@@ -3,16 +3,20 @@ const fs = require('fs');
 module.exports.getNotificacoesJSON = function (ip) {
   let rawdata = fs.readFileSync('notifications/conversa.json');
   let obj = JSON.parse(rawdata);
-  ip = ip.slice(7);
-  for (var i = 0; i < obj.notificacao.length; i++) {
-    if (!obj.notificacao[i].recebidos.includes(ip)) {
-        return obj.notificacao[i];
+  if (ip != undefined){
+    ip = ip.slice(7)
+    for (var i = 0; i < obj.notificacao.length; i++) {
+      if (!obj.notificacao[i].recebidos.includes(ip)) {
+        return obj.notificacao[i]
+      }
     }
+  } else {
+    return obj
   }
 }
 
 module.exports.adicionaNotificacao = function (json) {
-  let obj = getNotificacoesJSON()
+  let obj = this.getNotificacoesJSON()
   obj.notificacao.push(json)
   obj = JSON.stringify(obj)
   let rawdata = fs.writeFileSync('notifications/conversa.json', obj);
