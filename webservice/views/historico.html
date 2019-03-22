@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <title>Histórico de Comunicados</title>
+  <link href="stylesheets/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <link rel="stylesheet" href="stylesheets/bootstrap-datetimepicker.css" />
+  <script src="javascripts/jquery.min.js"></script>
+  <script src="javascripts/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="javascripts/moment.js" charset="utf-8"></script>
+  <script src="javascripts/bootstrap-datetimepicker.min.js"></script>
+  <script src="javascripts/sweetalert2.all.min.js"></script>
+  <script src="javascripts/historicoController.js"></script>
+  <link rel="stylesheet" href="stylesheets/style.css" />
+  <link rel="stylesheet" href="stylesheets/sweetalert2.min.css" />
+</head>
+<body>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" >Comunicados Internos</a>
+      </div>
+
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li ><a href="/">Novo Comunicado</a></li>
+          <li class="active"><a href="historico">Histórico de Comunicados</a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+  <br>
+  <div class="container">
+    <div class="row well">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Titulo</th>
+            <th>Data de Início</th>
+            <th>Data de Fim</th>
+            <th>Recebidos</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="corpoTable">
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+
+</body>
+</html>
