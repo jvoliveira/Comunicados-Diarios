@@ -40,15 +40,23 @@ $(document).ready(function() {
 })
 
 function salvaConversaJSON(){
-  var obj  = geraConversaJSON();
-	var data = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(obj));
-  /*
-  Envia JSON para o servidor
-  */
-  $('#form-notificacao').on('submit', function(event) {
-    $('#form-json').val(JSON.stringify(obj))
-  });
-  $('#form-notificacao').submit()
+    var obj  = geraConversaJSON();
+    var data = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(obj));
+    /*
+    Envia JSON para o servidor
+    */
+    $('#form-notificacao').on('submit', function(event) {
+      $('#form-json').val(JSON.stringify(obj))
+    });
+    Swal.fire({
+      width: 600,
+      type: 'success',
+      title: 'Comunicado criado com sucesso!',
+    }).then((result) => {
+      $('#form-notificacao').submit();
+    })
+    
+
 }
 
 function geraConversaJSON(){
