@@ -1,7 +1,14 @@
 var http = require('http');
 
 var conversa;
-var personagemImg = [ "", "img/1.svg", "img/2.svg", "img/3.svg", "img/4.svg", "img/5.svg" ];
+var personagemImg = [
+	"",
+	"img/1.svg",
+	"img/2.svg",
+	"img/3.svg",
+	"img/4.svg",
+	"img/5.svg" 
+];
 
 function getMessage(){
 	var port = '8080';

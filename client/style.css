@@ -1,15 +1,26 @@
+* {
+  font-family:Trebuchet MS;
+}
+
 body {
   overflow-y: hidden;
 }
 
+/* Conteúdo das mensagens */
+hgroup p {
+  font-size: 20px;
+  margin-top: auto;
+  padding: 1rem;
+}
+
 .linha{
-   float:left;
+  float:left;
 }
 
 .myButton {
-   position: relative;
-   top: -30px;
-   float: right;
+  position: relative;
+  top: -30px;
+  float: right;
 	background-color:#44c767;
 	-moz-border-radius:28px;
 	-webkit-border-radius:28px;
@@ -25,6 +36,7 @@ body {
 	text-decoration:none;
 	text-shadow:0px 1px 0px #2f6627;
 }
+
 .myButton:hover {
 	background-color:#5cbf2a;
 }
@@ -38,9 +50,11 @@ body {
 	float: right;
 	padding: 5px;
 }
+
 .balao-esquerda p{
 	color: #fff;
 }
+
 .balao-esquerda:after {
 	content: '';
 	position: absolute;
@@ -54,25 +68,16 @@ body {
 	margin-left: -25px;
 }
 
-#primeiro img{
-	width: 260px;
-	float: left;
-}
-
-#segundo img{
-	width: 260px;
-	float: right;
-}
-
 .balao-direita {
 	position: relative;
 	background: #00995d;
 	border-radius: .4em;
-   width: 300px;
-   height: 150px;
-   float: left;
-   padding: 5px;
+  width: 300px;
+  height: 150px;
+  float: left;
+  padding: 5px;
 }
+
 .balao-direita p{
 	color: #fff;
 }
@@ -88,4 +93,14 @@ body {
 	border-bottom: 0;
 	margin-top: -10px;
 	margin-right: -20px;
+}
+
+#primeiro img{
+  width: 260px;
+  float: left;
+}
+
+#segundo img{
+  width: 260px;
+  float: right;
 }
