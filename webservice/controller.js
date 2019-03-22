@@ -90,3 +90,22 @@ module.exports.confirmaIP = function (id, ip) {
   obj = JSON.stringify(obj)
   fs.writeFileSync('notifications/conversa.json', obj);
 }
+
+module.exports.excluiComunicado = function(id) {
+
+  try {
+    let rawdata = fs.readFileSync('notifications/conversa.json');
+    let obj = JSON.parse(rawdata);
+
+    for (var i = 0; i < obj.notificacao.length; i++) {
+      if (obj.notificacao[i].id === id) {
+        obj.notificacao.splice(i,1);
+      }
+    }
+    obj = JSON.stringify(obj)
+    fs.writeFileSync('notifications/conversa.json', obj);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
