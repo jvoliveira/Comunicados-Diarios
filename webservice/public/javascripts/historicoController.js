@@ -83,6 +83,28 @@ function formataLista(notificacoes) {
 
 
 function excluiRegistro(id) {
+
+  Swal.fire({
+    width:600,
+    title: 'Atenção!',
+    html: "<span style='font-size:1.5em;'>Tem certeza que deseja excluir esse comunicado?<br> Essa ação não poderá ser desfeita.</span>",
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'EXCLUIR',
+    cancelButtonText: 'CANCELAR'
+  }).then((result) => {
+    if (result.value) {
+      requestExclusao(id);
+    }
+  })
+
+
+
+
+}
+function requestExclusao(id) {
   var status = false;
   $.ajax({
       url:url+'exclui?id='+id,
