@@ -4,28 +4,45 @@ var control    = require('../controller');
 
 var router = express.Router();
 
+router.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
   res.render('index');
 });
 
 /* GET pagina de historico. */
 router.get('/historico', function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
   res.render('historico.html');
+});
+
+/* GET de exclusao. */
+router.get('/exclui', function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  var id = req.query.id;
+    var status = ({ resultado: control.excluiComunicado(id)});
+        res.json(status);
 });
 
 /*
   Envia JSON para o solicitante
 */
 router.get('/resposta', (req, res) => {
-   res.setHeader('Access-Control-Allow-Origin', '*');
+   res.header('Access-Control-Allow-Origin', '*');
    console.log('ip conectado: '+req.ip.slice(7));
    res.send(control.getNotificacoesJSON(req.ip));
 });
 
 // Lista todas as Notificações
-router.get('/listaTodas', (req, res) => {
-   res.setHeader('Access-Control-Allow-Origin', '*');
+router.get('/listarTodas', (req, res) => {
+   res.header('Access-Control-Allow-Origin', '*');
    console.log('ip conectado listando todas: '+req.ip.slice(7));
    res.send(control.getNotificacoesJSON());
 });
@@ -36,7 +53,7 @@ router.get('/listaTodas', (req, res) => {
   Confirma o recebimento do comunicado.
 */
 router.get('/confirmacao', (req, res) => {
-   res.setHeader('Access-Control-Allow-Origin', '*');
+   res.header('Access-Control-Allow-Origin', '*');
 
    console.log('ip confirmado: '+req.ip.slice(7));
 
