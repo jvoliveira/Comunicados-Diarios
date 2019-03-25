@@ -1,4 +1,5 @@
 var http = require('http');
+var fs = require('fs');
 
 var conversa;
 var personagemImg = [
@@ -7,14 +8,20 @@ var personagemImg = [
 	"img/2.svg",
 	"img/3.svg",
 	"img/4.svg",
-	"img/5.svg" 
+	"img/5.svg"
 ];
+// PEGANDO CONFIGURAÇÕES
+let rawdata = fs.readFileSync('config.json');
+let obj = JSON.parse(rawdata);
+var port = obj.porta;
+var protocol = obj.protocolo;
+var server = obj.servidor;
+var url = protocol + '://' + server + ':' + port;
+
+setInterval(getMessage, (1000*60)*15);
 
 function getMessage(){
-	var port = '8080';
-	var protocol = 'http';
-	var server = '10.117.0.214';
-	var url = protocol + '://' + server + ':' + port + '/resposta';
+	url += '/resposta';
 
 	var request = http.get(url, function(response){
 		var body = "";
@@ -25,7 +32,6 @@ function getMessage(){
 			if(response.statusCode === 200){
 				try{
 					conversa = JSON.parse(body);
-					console.log(conversa);
 					firstMessage();
 				} catch (ex){
 					printError("a"+ex);
@@ -39,14 +45,14 @@ function getMessage(){
 }
 
 function firstMessage(){
-		document.getElementById('img-primeiro').src = personagemImg[conversa.dialogo[0].personagemId];
-		document.getElementById('mensagem1').innerHTML = conversa.dialogo[0].msg;
-		document.getElementById('fecha').style.display = 'none';
-		document.getElementById('continua').style.display = 'block';
+	document.getElementById('img-primeiro').src = personagemImg[conversa.dialogo[0].personagemId];
+	document.getElementById('mensagem1').innerHTML = conversa.dialogo[0].msg;
+	document.getElementById('fecha').style.display = 'none';
+	document.getElementById('continua').style.display = 'block';
 
-		const remote = require('electron').remote;
-		var window = remote.getCurrentWindow();
-	   window.show();
+	const remote = require('electron').remote;
+	var window = remote.getCurrentWindow();
+	window.show();
 }
 
 function printError(error){
@@ -91,23 +97,19 @@ function fecha(){
 	const remote = require('electron').remote;
 	var window = remote.getCurrentWindow();
 	console.log("fecha()");
-   window.hide();
-//RESPOSTA COM O IP E O // ID
-enviaConfirmacao(conversa.id);
+	window.hide();
+	//RESPOSTA COM O IP E O // ID
+	enviaConfirmacao(conversa.id);
 }
 
 function enviaConfirmacao(id) {
-	var port = '8080';
-	var protocol = 'http';
-	var server = '10.117.0.214';
-	console.log("entrou");
-	var url = protocol + '://' + server + ':' + port + '/confirmacao?id='+id;
+	url += '/confirmacao?id='+id;
+	console.log("url: "+url);
 	var request = http.get(url, function(){
 		console.log("entrou no enviaConfirmacao");
 	});
 	console.log(request);
 }
 
-setInterval(getMessage, 1000*60);
 
 module.exports.getMessage = getMessage;

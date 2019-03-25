@@ -1,0 +1,6 @@
+{
+  "_comment": "A APLICAÇÃO GERA A URL PARA CONSUMIR O WEBSERVICE BASEADA NOS DADOS ABAIXO",
+  "protocolo": "http",
+  "servidor": "INSIRA_O_IP_DO_WEBSERVICE_AQUI",
+  "porta": "8080"
+}
