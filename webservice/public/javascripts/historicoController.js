@@ -1,11 +1,9 @@
 $(document).ready(function(){
-  ListaNotificações();
+  ListaNotificacoes();
 });
 
-var port = '8080';
 var protocol = 'http';
-var server = '10.117.0.214';
-var url = protocol + '://' + server + ':' + port + '/';
+var url = protocol + '://' + window.location.host + '/';
 
 var personagemImg = [
   "",
@@ -20,15 +18,15 @@ var personagemNOME = [ "", "Isonildo", "Norma", "Rebeca Nunes (RN)", "Qualice", 
 
 
 //FUNCTIONS ABAIXO
-function ListaNotificações() {
+function ListaNotificacoes() {
   var notificacoes;
 
   $.ajax({
-      url:url+'listarTodas',
-      dataType: 'json',
-      success: function(response){
-        formataLista(response.notificacao)
-      }
+    url:url+'listarTodas',
+    dataType: 'json',
+    success: function(response){
+      formataLista(response.notificacao)
+    }
   });
 }
 
@@ -60,30 +58,28 @@ function formataLista(notificacoes) {
     }
     for (var i = 0; i < lista.length; i++) {
       codigo +='<tr>'+
-                  '<td>'+lista[i].id+'</td>'+
-                  '<td>'+lista[i].titulo + '</td>'+
-                  '<td>'+lista[i].data.inicio +'</td>'+
-                  '<td>'+lista[i].data.fim + '</td>'+
-                  '<td>'+lista[i].nrecebidos + '</td>'+
-                  '<td><button type="button" class="btn btn-primary" onclick="visualizaRegistro('+i+')"><span class="glyphicon glyphicon-eye-open"></span></button>  '+
-                  '<button type="button" class="btn btn-danger" onclick="excluiRegistro(\''+lista[i].id+'\')"><span class="glyphicon glyphicon-trash"></span></button> </td>'+
-              '</tr>';
+      '<td>'+lista[i].id+'</td>'+
+      '<td>'+lista[i].titulo + '</td>'+
+      '<td>'+lista[i].data.inicio +'</td>'+
+      '<td>'+lista[i].data.fim + '</td>'+
+      '<td>'+lista[i].nrecebidos + '</td>'+
+      '<td><button type="button" class="btn btn-primary" onclick="visualizaRegistro('+i+')"><span class="glyphicon glyphicon-eye-open"></span></button>  '+
+      '<button type="button" class="btn btn-danger" onclick="excluiRegistro(\''+lista[i].id+'\')"><span class="glyphicon glyphicon-trash"></span></button> </td>'+
+      '</tr>';
     }
 
   } else {
     codigo = ''
-            +'<tr>'
-            +  '<td colspan="6" style="text-align:center;color:red;">'
-            +    '<strong>Nenhum comunicado cadastrado!</strong>'
-            +  '</td>'
-            +'</tr>'
+    +'<tr>'
+    +  '<td colspan="6" style="text-align:center;color:red;">'
+    +    '<strong>Nenhum comunicado cadastrado!</strong>'
+    +  '</td>'
+    +'</tr>'
   }
   $('#corpoTable').prop('innerHTML', codigo);
 }
 
-
 function excluiRegistro(id) {
-
   Swal.fire({
     width:600,
     title: 'Atenção!',
@@ -99,21 +95,17 @@ function excluiRegistro(id) {
       requestExclusao(id);
     }
   })
-
-
-
-
 }
 function requestExclusao(id) {
   var status = false;
   $.ajax({
-      url:url+'exclui?id='+id,
-      dataType: 'json',
-      success: function(response){
-        status = response.resultado;
-        console.log("response: "+response);
-        console.log("status: "+status);
-      }
+    url:url+'exclui?id='+id,
+    dataType: 'json',
+    success: function(response){
+      status = response.resultado;
+      console.log("response: "+response);
+      console.log("status: "+status);
+    }
   }).done(function(){
     if(status){
       Swal.fire({
@@ -143,41 +135,41 @@ function visualizaRegistro(i) {
     html:HTMLtoString(i),
     showCloseButton: true,
     focusConfirm: false,
-      confirmButtonText:'FECHAR',
+    confirmButtonText:'FECHAR',
   })
 }
 
 function HTMLtoString(indice) {
   var htmlFinal = '<br><div class="col-md-4">'+
-    '<div class="input-group mb-3">'+
-      '<div class="input-group-prepend">'+
-        '<span class="text-titulo" >Data Inicial</span>'+
-      '</div>'+
-      '<input type="text" id="input-datainicial" value="'+lista[indice].data.inicio+'" class="form-control" aria-label="Default"  disabled>'+
-    '</div>'+
+  '<div class="input-group mb-3">'+
+  '<div class="input-group-prepend">'+
+  '<span class="text-titulo" >Data Inicial</span>'+
+  '</div>'+
+  '<input type="text" id="input-datainicial" value="'+lista[indice].data.inicio+'" class="form-control" aria-label="Default"  disabled>'+
+  '</div>'+
   '</div>'+
   '<div class="col-md-4">'+
-    '<div class="input-group mb-3">'+
-      '<div class="input-group-prepend">'+
-        '<span class="text-titulo" >Data Fim</span>'+
-      '</div>'+
-      '<input type="text" id="input-datafim" value="'+lista[indice].data.fim+'" class="form-control" aria-label="Default"  disabled>'+
-    '</div>'+
+  '<div class="input-group mb-3">'+
+  '<div class="input-group-prepend">'+
+  '<span class="text-titulo" >Data Fim</span>'+
+  '</div>'+
+  '<input type="text" id="input-datafim" value="'+lista[indice].data.fim+'" class="form-control" aria-label="Default"  disabled>'+
+  '</div>'+
   '</div>'+
   '<div class="col-md-4">'+
-    '<div class="input-group mb-3">'+
-      '<div class="input-group-prepend">'+
-        '<span class="text-titulo" >Recebidos</span>'+
-      '</div>'+
-      '<input type="text" class="text-center form-control" value="'+lista[indice].nrecebidos+'" aria-label="Default" id="input-recebidos" disabled>'+
-    '</div> </div>'+
-    '<div class="col-md-12" id="mensagens" style="margin-top: 20px; max-height:200px;">';
+  '<div class="input-group mb-3">'+
+  '<div class="input-group-prepend">'+
+  '<span class="text-titulo" >Recebidos</span>'+
+  '</div>'+
+  '<input type="text" class="text-center form-control" value="'+lista[indice].nrecebidos+'" aria-label="Default" id="input-recebidos" disabled>'+
+  '</div> </div>'+
+  '<div class="col-md-12" id="mensagens" style="margin-top: 20px; max-height:200px;">';
 
-    for (var i = 0; i < lista[indice].dialogo.length; i++) {
-      htmlFinal += '<div class="well well-sm" id="msg-0"><div class="row"><div class="col-xs-3 col-md-3 text-center"><img src="'+personagemImg[lista[indice].dialogo[i].personagemId]+'" class="img-rounded img-responsive"></div><div class="col-xs-9 col-md-9 section-box" style="text-align:left;"><h4><strong>'+personagemNOME[lista[indice].dialogo[i].personagemId]+'</strong></h4><h5>'+lista[indice].dialogo[i].msg+'</h5></div></div></div>';
-    }
+  for (var i = 0; i < lista[indice].dialogo.length; i++) {
+    htmlFinal += '<div class="well well-sm" id="msg-0"><div class="row"><div class="col-xs-3 col-md-3 text-center"><img src="'+personagemImg[lista[indice].dialogo[i].personagemId]+'" class="img-rounded img-responsive"></div><div class="col-xs-9 col-md-9 section-box" style="text-align:left;"><h4><strong>'+personagemNOME[lista[indice].dialogo[i].personagemId]+'</strong></h4><h5>'+lista[indice].dialogo[i].msg+'</h5></div></div></div>';
+  }
 
-    htmlFinal += '</div>';
+  htmlFinal += '</div>';
 
-    return htmlFinal
+  return htmlFinal
 }
