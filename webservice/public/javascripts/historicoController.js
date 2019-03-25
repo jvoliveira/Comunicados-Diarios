@@ -3,7 +3,7 @@ $(document).ready(function(){
 });
 
 var protocol = 'http';
-var url = protocol + '://' + window.location.host '/';
+var url = protocol + '://' + window.location.host + '/';
 
 var personagemImg = [
   "",
