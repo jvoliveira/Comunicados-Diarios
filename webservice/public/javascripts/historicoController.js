@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  ListaNotificações();
+  ListaNotificacoes();
 });
 
 var protocol = 'http';
@@ -18,7 +18,7 @@ var personagemNOME = [ "", "Isonildo", "Norma", "Rebeca Nunes (RN)", "Qualice", 
 
 
 //FUNCTIONS ABAIXO
-function ListaNotificações() {
+function ListaNotificacoes() {
   var notificacoes;
 
   $.ajax({
