@@ -1,16 +1,24 @@
 var http = require('http');
-
+const fs = require('fs');
 var notificacao;
 var personagemImg = [ "", "assets/img/1.svg", "assets/img/2.svg", "assets/img/3.svg", "assets/img/4.svg", "assets/img/5.svg" ];
 var personagemNOME = [ "", "Isonildo", "Norma", "Rebeca Nunes (RN)", "Qualice", "Qualito" ];
-var port = '8080';
-var protocol = 'http';
-var server = '10.117.0.214';
+
+// PEGANDO CONFIGURAÇÕES
+let rawdata = fs.readFileSync(__dirname+"/config.json");
+let obj = JSON.parse(rawdata);
+var port = obj.porta;
+var protocol = obj.protocolo;
+var server = obj.servidor;
+var url = protocol + '://' + server + ':' + port;
+
+setInterval(getMessage, (1000*10));
+
 
 function getMessage(){
-	var url = protocol + '://' + server + ':' + port + '/resposta';
+	var urlREQUEST = url + '/resposta';
 
-	var request = http.get(url, function(response){
+	var request = http.get(urlREQUEST, function(response){
 		var body = "";
 		response.on("data", function(chunk){
 			body += chunk;
@@ -20,12 +28,13 @@ function getMessage(){
 				try{
 					notificacao = JSON.parse(body);
 					console.log(notificacao);
+					resetChat();
 					inicianotificacao();
 				} catch (ex){
-					printError("a"+ex);
+					printError("Não retornou comunicado: "+ex);
 				}
 			} else {
-				printError({message: "There was an error getting profile for " + json_file + "."});
+				printError({message: "Não teve retorno cod 200 " + urlREQUEST + "."});
 			}
 		});
 	});
@@ -33,6 +42,10 @@ function getMessage(){
 }
 
 function inicianotificacao(){
+	const remote = require('electron').remote;
+	var window = remote.getCurrentWindow();
+	window.show();
+
 var tempo = 0;
   for (var i = 0; i < notificacao.dialogo.length; i++) {
     if (i%2==0) {
@@ -46,7 +59,7 @@ var tempo = 0;
 }
 
 function printError(error){
-	console.error(error);
+	console.warn(error);
 }
 
 function fecha(){
@@ -60,8 +73,8 @@ enviaConfirmacao(notificacao.id);
 
 function enviaConfirmacao(id) {
 	console.log("entrou");
-	var url = protocol + '://' + server + ':' + port + '/confirmacao?id='+id;
-	var request = http.get(url, function(){
+	var urlREQUEST = url + '/confirmacao?id='+id;
+	var request = http.get(urlREQUEST, function(){
 		console.log("entrou no enviaConfirmacao");
 	});
 	console.log(request);
@@ -135,8 +148,3 @@ $(".mytext").on("keydown", function(e){
 $('body > div > div > div:nth-child(2) > span').click(function(){
     $(".mytext").trigger({type: 'keydown', which: 13, keyCode: 13});
 })
-
-//-- Clear Chat
-resetChat();
-getMessage();
-setTimeout(getMessage, 1000*60);
