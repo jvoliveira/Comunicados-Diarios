@@ -12,39 +12,46 @@ var personagemImg = [
 ];
 // PEGANDO CONFIGURAÇÕES
 let rawdata = fs.readFileSync('config.json');
-let obj = JSON.parse(rawdata);
-var port = obj.porta;
-var protocol = obj.protocolo;
-var server = obj.servidor;
-var url = protocol + '://' + server + ':' + port;
+const obj = JSON.parse(rawdata);
+const port = obj.porta;
+const protocol = obj.protocolo;
+const server = obj.servidor;
+const url = protocol + '://' + server + ':' + port;
+const tempoDeRequisicao = obj.tempoDeRequisicao * (1000*60);
 
-setInterval(getMessage, (1000*60)*15);
+let ready = true;
+
+console.log("Tempo de requisicao: "+tempoDeRequisicao);
+// Configura intervalo de tempo entre as requisiçoes do webservice
+setInterval(getMessage, tempoDeRequisicao);
 
 function getMessage(){
-	url += '/resposta';
+	if(ready){
+		let urlMessage = url + '/resposta';
 
-	var request = http.get(url, function(response){
-		var body = "";
-		response.on("data", function(chunk){
-			body += chunk;
-		});
-		response.on("end", function(){
-			if(response.statusCode === 200){
-				try{
-					conversa = JSON.parse(body);
-					firstMessage();
-				} catch (ex){
-					printError("a"+ex);
+		var request = http.get(urlMessage, function(response){
+			var body = "";
+			response.on("data", function(chunk){
+				body += chunk;
+			// });
+			// response.on("end", function(){
+				if(response.statusCode === 200){
+					try{
+						conversa = JSON.parse(body);
+						firstMessage();
+					} catch (ex){
+						printError("a"+ex);
+					}
+				} else {
+					printError({message: "There was an error getting profile for " + json_file + "."});
 				}
-			} else {
-				printError({message: "There was an error getting profile for " + json_file + "."});
-			}
+			});
 		});
-	});
-
+	}
 }
 
 function firstMessage(){
+	ready = false;
 	document.getElementById('img-primeiro').src = personagemImg[conversa.dialogo[0].personagemId];
 	document.getElementById('mensagem1').innerHTML = conversa.dialogo[0].msg;
 	document.getElementById('fecha').style.display = 'none';
@@ -94,6 +101,7 @@ function clicou(){
 }
 
 function fecha(){
+	ready = true;
 	const remote = require('electron').remote;
 	var window = remote.getCurrentWindow();
 	console.log("fecha()");
@@ -103,9 +111,9 @@ function fecha(){
 }
 
 function enviaConfirmacao(id) {
-	url += '/confirmacao?id='+id;
-	console.log("url: "+url);
-	var request = http.get(url, function(){
+	let urlConfirmacao = url + '/confirmacao?id=' + id;
+	console.log("url: "+urlConfirmacao);
+	var request = http.get(urlConfirmacao, function(){
 		console.log("entrou no enviaConfirmacao");
 	});
 	console.log(request);

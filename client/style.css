@@ -48,7 +48,7 @@ hgroup p {
 	background: #00995d;
 	border-radius: .4em;
 	width: 300px;
-	height: 150px;
+	/*height: 150px;*/
 	float: right;
 	padding: 5px;
 }
@@ -75,7 +75,7 @@ hgroup p {
 	background: #00995d;
 	border-radius: .4em;
   width: 300px;
-  height: 150px;
+  /*height: 150px;*/
   float: left;
   padding: 5px;
 }
