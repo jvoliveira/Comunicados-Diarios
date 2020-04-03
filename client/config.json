@@ -1,7 +1,7 @@
 {
-  "_comment": "A APLICAÇÃO GERA A URL PARA CONSUMIR O WEBSERVICE BASEADA NOS DADOS ABAIXO",
+  "_comment": "A APLICAÇÃO GERA A URL PARA CONSULTAR O SERVER BASEADA NOS DADOS ABAIXO",
   "protocolo": "http",
-  "servidor": "IP_DO_WEBSERVICE_AQUI",
+  "servidor": "INSIRA_O_IP_DO_SERVER_AQUI",
   "porta": "8080",
   "tempoDeRequisicao": 1
 }
