@@ -9,7 +9,7 @@
   "author": "João Vitor Oliveira e Bruno Tardin",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^4.2.12"
+    "electron": "^13.6.6"
   },
   "dependencies": {
     "express": "^4.17.1",
